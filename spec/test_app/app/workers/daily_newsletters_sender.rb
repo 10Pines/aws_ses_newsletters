@@ -1,5 +1,4 @@
 class DailyNewslettersSender < AwsSesNewsletters::NewslettersSender
-  include ::Sidekiq::Worker
 
   def create_newsletter
     @newsletter = AwsSesNewsletters::Newsletter.create(from: 'fzuppa@esteticia.com',

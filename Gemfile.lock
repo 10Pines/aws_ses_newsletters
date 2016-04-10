@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     aws_ses_newsletters (0.0.1)
+      aws-ses
       rails (~> 4.1.15)
 
 GEM

@@ -2,6 +2,7 @@ require 'aws_ses_newsletters/mail_builder'
 
 module AwsSesNewsletters
   class NewslettersSender
+    include ::Sidekiq::Worker
     attr_accessor :newsletter
 
     def perform
