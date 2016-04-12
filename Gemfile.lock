@@ -3,7 +3,10 @@ PATH
   specs:
     aws_ses_newsletters (0.0.1)
       aws-ses
+      nokogiri
+      premailer
       rails (~> 4.1.15)
+      sidekiq
 
 GEM
   remote: https://rubygems.org/
@@ -127,13 +130,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-ses
   aws_ses_newsletters!
   factory_girl_rails
-  nokogiri
-  premailer
   rspec-rails
-  sidekiq
   sqlite3
 
 BUNDLED WITH
