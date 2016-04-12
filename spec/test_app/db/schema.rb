@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410174449) do
+ActiveRecord::Schema.define(version: 20160411205706) do
+
+  create_table "aws_ses_newsletters_email_responses", force: true do |t|
+    t.string   "email"
+    t.text     "extra_info"
+    t.integer  "response_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "aws_ses_newsletters_newsletters", force: true do |t|
     t.string   "from"
