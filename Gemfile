@@ -15,3 +15,7 @@ gemspec
 
 gem 'rspec-rails'
 gem 'factory_girl_rails'
+gem 'aws-ses'
+gem 'sidekiq'
+gem 'nokogiri'
+gem 'premailer'

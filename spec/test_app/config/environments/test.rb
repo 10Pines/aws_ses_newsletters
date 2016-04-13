@@ -37,3 +37,6 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
+
+ENV["SES_ACCESS_KEY_ID"] = "15555551212"
+ENV["SES_SECRET_ACCESS_KEY"] = "453646456456"

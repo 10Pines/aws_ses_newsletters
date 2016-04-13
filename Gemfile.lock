@@ -130,9 +130,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-ses
   aws_ses_newsletters!
   factory_girl_rails
+  nokogiri
+  premailer
   rspec-rails
+  sidekiq
   sqlite3
 
 BUNDLED WITH
