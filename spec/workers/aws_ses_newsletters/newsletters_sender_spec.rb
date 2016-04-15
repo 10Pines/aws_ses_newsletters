@@ -7,8 +7,8 @@ module AwsSesNewsletters
       Class.new(AwsSesNewsletters::NewslettersSender) do
         def create_newsletter
           Newsletter.create(from: 'federico@10pines.com',
-                                               subject: 'These are the daily news',
-                                               html_body: 'Great News Buddy. http://unsubscribe?email=recipient_email'
+            subject: 'These are the daily news',
+            html_body: 'Great News Buddy. http://unsubscribe?email=recipient_email'
           )
         end
 
@@ -20,6 +20,13 @@ module AwsSesNewsletters
 
         def do_custom_replacements_for(mail)
           mail.html_part.body.raw_source.gsub('recipient_email', mail.to.to_s)
+        end
+
+        def build_newsletter
+          Newsletter.new(from: 'federico@10pines.com',
+            subject: 'These are the daily news',
+            html_body: 'Great News Buddy. http://unsubscribe?email=recipient_email'
+          )
         end
       end
     end
@@ -51,5 +58,9 @@ module AwsSesNewsletters
       expect(mail.html_part.body.raw_source).to eq original_html_body
     end
 
+    it 'should send preview email' do
+      expect(::SES).to receive(:send_raw_email)
+      daily_newsletter_klass.new.preview_to('federico@10pines.com')
+    end
   end
 end

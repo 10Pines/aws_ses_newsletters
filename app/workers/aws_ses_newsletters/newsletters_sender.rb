@@ -10,6 +10,12 @@ module AwsSesNewsletters
       send_emails
     end
 
+    def preview_to(email)
+      @newsletter = build_newsletter
+      mail = build_mail
+      mail.to = email
+      replace_and_send_mail_safely(mail)
+    end
     protected
 
     def send_emails
