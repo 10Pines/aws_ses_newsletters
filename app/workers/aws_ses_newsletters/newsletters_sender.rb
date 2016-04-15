@@ -14,18 +14,10 @@ module AwsSesNewsletters
 
     def send_emails
       mail = build_mail
-      # html_body = mail.html_part.body.raw_source
       get_recipients do |recipient|
-        # next if EmailResponse.exists?(email: recipient.email) # bounces & complaints
-
+        next if EmailResponse.exists?(email: recipient.email) # bounces & complaints
         mail.to = recipient.email
-        # mail.html_part.body = html_body
-        # do_custom_replacements_for(mail, recipient)
-        begin
-          SES.send_raw_email(mail)
-        rescue StandardError => e
-          Rails.logger.info e.message
-        end
+        replace_and_send_mail_safely(mail)
       end
     end
 
@@ -41,8 +33,23 @@ module AwsSesNewsletters
       {}
     end
 
-    # This method is called in case you want to replace via gsub something in the email to make it more customized
-    def do_custom_replacements_for(mail, recipient)
+    def replace_and_send_mail_safely(mail)
+      html_body = mail.html_part.body.raw_source
+      do_custom_replacements_for(mail)
+      send_raw_email_safely(mail)
+      mail.html_part.body = html_body
+    end
+
+    # This method is called in case you want to do some replacements
+    def do_custom_replacements_for(mail, *args)
+    end
+
+    def send_raw_email_safely(mail)
+      begin
+        SES.send_raw_email(mail)
+      rescue StandardError => e
+        Rails.logger.info e.message
+      end
     end
 
     private
