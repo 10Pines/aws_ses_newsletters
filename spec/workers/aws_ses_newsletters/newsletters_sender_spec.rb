@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'ostruct'
 
 module AwsSesNewsletters
   RSpec.describe NewslettersSender do

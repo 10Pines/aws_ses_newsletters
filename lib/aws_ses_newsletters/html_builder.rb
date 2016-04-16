@@ -6,9 +6,9 @@ module AwsSesNewsletters
 
     attr_accessor :template_name
 
-    def initialize
-      initialize_template_name
-      initialize_variables
+    def initialize(template_name, instance_variables_hash = nil)
+      @template_name = template_name
+      instance_variables_hash.each { |name, value| instance_variable_set("@#{name}", value) } if instance_variables_hash.present?
     end
 
     def build
