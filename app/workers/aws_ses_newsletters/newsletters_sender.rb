@@ -52,7 +52,7 @@ module AwsSesNewsletters
 
     def send_raw_email_safely(mail)
       begin
-        SES.send_raw_email(mail)
+        ::SES.send_raw_email(mail)
       rescue StandardError => e
         Rails.logger.info e.message
       end
