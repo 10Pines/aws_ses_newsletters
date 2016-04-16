@@ -1,3 +1,5 @@
 = AwsSesNewsletters
 
 This project rocks and uses MIT-LICENSE.
+
+{<img src="https://codeship.com/projects/1ddc9a90-e61d-0133-54a1-0e12c0a498c1/status?branch=master" alt="Status?branch=master" />}[https://codeship.com/projects/146708]
