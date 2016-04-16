@@ -1,1 +1,0 @@
-Promotion = Struct.new(:name)
