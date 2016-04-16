@@ -1,3 +1,5 @@
+require 'premailer'
+
 module AwsSesNewsletters
   class HtmlBuilder
     include Rails.application.routes.url_helpers
@@ -15,7 +17,7 @@ module AwsSesNewsletters
       template = File.read(template_name)
       renderer = ERB.new(template)
       html_string = renderer.result(get_binding)
-      inline_html_string = Premailer.new(html_string, warn_level: Premailer::Warnings::SAFE, with_html_string: true).to_inline_css
+      inline_html_string = ::Premailer.new(html_string, warn_level: Premailer::Warnings::SAFE, with_html_string: true).to_inline_css
       return inline_html_string.gsub(/\n/, "")
     end
 
