@@ -31,13 +31,13 @@ module AwsSesNewsletters
     end
 
     it 'should send email' do
-      expect(::SES).to receive(:send_raw_email).twice
+      expect_any_instance_of(::AWS::SES::Base).to receive(:send_raw_email).twice
       daily_newsletter_klass.new.perform
     end
 
     it 'should not send email when exists in EmailResponse' do
       FactoryGirl.create(:aws_ses_newsletters_email_response, email: 'bounced@example.com')
-      expect(::SES).to_not receive(:send_raw_email)
+      expect_any_instance_of(::AWS::SES::Base).not_to receive(:send_raw_email)
       bounced_newsletter = Class.new(daily_newsletter_klass) do
         def get_recipients
           yield OpenStruct.new(email: 'bounced@example.com')
@@ -52,13 +52,13 @@ module AwsSesNewsletters
       mail = daily_newsletter.send(:build_mail)
       mail.to = 'hernan@10pines.com'
       original_html_body = mail.html_part.body.raw_source
-      allow(::SES).to receive(:send_raw_email)
+      allow_any_instance_of(::AWS::SES::Base).to receive(:send_raw_email)
       daily_newsletter.send(:replace_and_send_mail_safely, mail)
       expect(mail.html_part.body.raw_source).to eq original_html_body
     end
 
     it 'should send preview email' do
-      expect(::SES).to receive(:send_raw_email)
+      expect_any_instance_of(::AWS::SES::Base).to receive(:send_raw_email)
       daily_newsletter_klass.new.preview_to('federico@10pines.com')
     end
   end

@@ -5,6 +5,9 @@ module AwsSesNewsletters
     include ::Sidekiq::Worker
     attr_accessor :newsletter
 
+    SES = AWS::SES::Base.new(access_key_id: ENV['SES_ACCESS_KEY_ID'],
+                             secret_access_key: ENV['SES_SECRET_ACCESS_KEY'])
+
     def perform
       @newsletter = create_newsletter
       send_emails
@@ -52,7 +55,7 @@ module AwsSesNewsletters
 
     def send_raw_email_safely(mail)
       begin
-        ::SES.send_raw_email(mail)
+        SES.send_raw_email(mail)
       rescue StandardError => e
         Rails.logger.info e.message
       end
