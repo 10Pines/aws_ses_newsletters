@@ -5,7 +5,7 @@ PATH
       aws-ses
       nokogiri
       premailer
-      rails (~> 4.1.15)
+      rails (~> 4.1)
       sidekiq
 
 GEM
