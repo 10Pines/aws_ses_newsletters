@@ -13,11 +13,11 @@ module AwsSesNewsletters
       send_emails
     end
 
-    def preview_to(email)
+    def preview_to(recipient)
       @newsletter = build_newsletter
       mail = build_mail
-      mail.to = email
-      replace_and_send_mail_safely(mail)
+      mail.to = recipient.email
+      replace_and_send_mail_safely(mail, recipient)
     end
     protected
 
@@ -26,7 +26,7 @@ module AwsSesNewsletters
       get_recipients do |recipient|
         next if EmailResponse.exists?(email: recipient.email) # bounces & complaints
         mail.to = recipient.email
-        replace_and_send_mail_safely(mail)
+        replace_and_send_mail_safely(mail, recipient)
       end
     end
 
@@ -42,15 +42,11 @@ module AwsSesNewsletters
       {}
     end
 
-    def replace_and_send_mail_safely(mail)
+    def replace_and_send_mail_safely(mail, recipient)
       html_body = mail.html_part.body.raw_source
-      do_custom_replacements_for(mail)
+      do_custom_replacements_for(mail, recipient)
       send_raw_email_safely(mail)
       mail.html_part.body = html_body
-    end
-
-    # This method is called in case you want to do some replacements
-    def do_custom_replacements_for(mail, *args)
     end
 
     def send_raw_email_safely(mail)

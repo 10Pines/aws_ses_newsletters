@@ -17,8 +17,8 @@ module AwsSesNewsletters
           end
         end
 
-        def do_custom_replacements_for(mail)
-          mail.html_part.body.raw_source.gsub('recipient_email', mail.to.to_s)
+        def do_custom_replacements_for(mail, recipient)
+          mail.html_part.body.raw_source.gsub('recipient_email', recipient.email)
         end
 
         def build_newsletter
@@ -53,13 +53,13 @@ module AwsSesNewsletters
       mail.to = 'hernan@10pines.com'
       original_html_body = mail.html_part.body.raw_source
       allow_any_instance_of(::AWS::SES::Base).to receive(:send_raw_email)
-      daily_newsletter.send(:replace_and_send_mail_safely, mail)
+      daily_newsletter.send(:replace_and_send_mail_safely, mail, OpenStruct.new(email: 'hernan@10pines.com'))
       expect(mail.html_part.body.raw_source).to eq original_html_body
     end
 
     it 'should send preview email' do
       expect_any_instance_of(::AWS::SES::Base).to receive(:send_raw_email)
-      daily_newsletter_klass.new.preview_to('federico@10pines.com')
+      daily_newsletter_klass.new.preview_to(OpenStruct.new(email: 'federico@10pines.com'))
     end
   end
 end
