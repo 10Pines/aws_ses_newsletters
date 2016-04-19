@@ -1,0 +1,7 @@
+Tue, 19 Apr 2016 08:20:14 -0300
+README.rdoc	Mon, 18 Apr 2016 22:00:49 -0300
+lib/aws_ses_newsletters.rb	Tue, 12 Apr 2016 17:58:53 -0300
+lib/aws_ses_newsletters/engine.rb	Tue, 12 Apr 2016 17:57:39 -0300
+lib/aws_ses_newsletters/html_builder.rb	Mon, 18 Apr 2016 22:06:14 -0300
+lib/aws_ses_newsletters/mail_builder.rb	Mon, 18 Apr 2016 22:06:14 -0300
+lib/aws_ses_newsletters/version.rb	Sun, 10 Apr 2016 14:17:02 -0300

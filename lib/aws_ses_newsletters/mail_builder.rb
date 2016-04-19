@@ -1,4 +1,5 @@
 module AwsSesNewsletters
+  # Helper to build a Mail
   class MailBuilder
     attr_accessor :from, :to, :subject, :html_body, :images
 

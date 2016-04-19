@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>README - AwsSesNewsletters</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-AwsSesNewsletters">AwsSesNewsletters</a>
+    <li><a href="#label-What+is+AwsSesNewsletters">What is AwsSesNewsletters</a>
+    <li><a href="#label-Dependencies">Dependencies</a>
+    <li><a href="#label-How+to+install">How to install</a>
+    <li><a href="#label-Install+the+gem-2C+either+as">Install the gem, either as</a>
+    <li><a href="#label-Install+the+needed+migrations-2C+to+generate+the+table+for+Newsletters+-26+Emails+Responses">Install the needed migrations, to generate the table for Newsletters &amp; Emails Responses</a>
+    <li><a href="#label-Mount+the+engine+in+the+path+of+your+preference.+In+routes.rb">Mount the engine in the path of your preference. In <strong>routes.rb</strong></a>
+    <li><a href="#label-Add+your+amazon+keys">Add your amazon keys</a>
+    <li><a href="#label-Usage">Usage</a>
+    <li><a href="#label-A+few+important+use+cases">A few important use cases</a>
+    <li><a href="#label-Create+the+html+using+ERB">Create the html using ERB</a>
+    <li><a href="#label-Replace+strings+after+the+html+is+built">Replace strings after the html is built</a>
+    <li><a href="#label-Send+inline+attachments">Send inline attachments</a>
+    <li><a href="#label-Author-3A+Federico+Zuppa">Author: Federico Zuppa</a>
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./README_rdoc.html">README</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page README.rdoc">
+
+<h1 id="label-AwsSesNewsletters"><a href="AwsSesNewsletters.html">AwsSesNewsletters</a><span><a href="#label-AwsSesNewsletters">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<p>This project rocks and uses MIT-LICENSE.</p>
+
+<p><a href="https://codeship.com/projects/146708"><img
+src="https://codeship.com/projects/1ddc9a90-e61d-0133-54a1-0e12c0a498c1/status?branch=master"
+alt="Status?branch=master" /></a></p>
+
+<h2 id="label-What+is+AwsSesNewsletters">What is <a href="AwsSesNewsletters.html">AwsSesNewsletters</a><span><a href="#label-What+is+AwsSesNewsletters">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p><a href="AwsSesNewsletters.html">AwsSesNewsletters</a> is a Rails plugin
+or, using the new nomenclature a gemified plugin, that allows you to very
+easily construct newsletters that are going to be sent with Amazon SES. In
+other words, it is a wrapper over aws-ses that provides some basic
+functionality to construct the emails and a common workflow to send the
+emails.</p>
+
+<h2 id="label-Dependencies">Dependencies<span><a href="#label-Dependencies">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ol><li>
+<p><a
+href="https://github.com/drewblas/aws-ses">github.com/drewblas/aws-ses</a></p>
+</li><li>
+<p><a
+href="https://github.com/premailer/premailer">github.com/premailer/premailer</a></p>
+</li><li>
+<p><a href="https://github.com/mperham/sidekiq">github.com/mperham/sidekiq</a></p>
+</li></ol>
+
+<h2 id="label-How+to+install">How to install<span><a href="#label-How+to+install">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<h3 id="label-Install+the+gem-2C+either+as">Install the gem, either as<span><a href="#label-Install+the+gem-2C+either+as">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p><code>gem install aws_ses_newsletters</code></p>
+
+<p>or adding</p>
+
+<p><code>gem &#39;aws_ses_newsletters&#39;</code> to your Gemfile and running
+<code>bundle install</code></p>
+
+<h3 id="label-Install+the+needed+migrations-2C+to+generate+the+table+for+Newsletters+-26+Emails+Responses">Install the needed migrations, to generate the table for Newsletters &amp; Emails Responses<span><a href="#label-Install+the+needed+migrations-2C+to+generate+the+table+for+Newsletters+-26+Emails+Responses">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p><code>rake aws_ses_newsletters:install:migrations</code></p>
+
+<p>This will add 2 migration, that you need to run:</p>
+
+<p><code>rake db:migrate</code></p>
+
+<h3 id="label-Mount+the+engine+in+the+path+of+your+preference.+In+routes.rb">Mount the engine in the path of your preference. In <strong>routes.rb</strong><span><a href="#label-Mount+the+engine+in+the+path+of+your+preference.+In+routes.rb">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p><code>mount AwsSesNewsletters::Engine, at: &quot;/newsletters&quot;</code></p>
+
+<p>This will add 2 new routes to your application:</p>
+<ol style="list-style-type: lower-alpha"><li>
+<p>POST newsletters/email_responses/bounce</p>
+</li><li>
+<p>POST newsletters/email_responses/complaint</p>
+</li></ol>
+
+<p>These are the routes you need to configure in <strong>SNS</strong> to
+receive notifications for bounces and complaints respectively.</p>
+
+<h3 id="label-Add+your+amazon+keys">Add your amazon keys<span><a href="#label-Add+your+amazon+keys">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<ol style="list-style-type: lower-alpha"><li>
+<p>SES_ACCESS_KEY_ID</p>
+</li><li>
+<p>SES_SECRET_ACCESS_KEY</p>
+</li></ol>
+
+<p>In heroku, you need to set them as:</p>
+
+<p>heroku config:set SES_ACCESS_KEY_ID=&lt;you_access_keid&gt; heroku
+config:set SES_SECRET_ACCESS_KEY=&lt;you_secret_access_key&gt;</p>
+
+<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>To create a Newsletter, you need to inherit from
+AwsSesNewsletters::NewslettersSender and implement 2 methods:</p>
+<ol><li>
+<p>create_newsletter: which should create &amp; return a
+AwsSesNewsletters::Newsletter</p>
+</li><li>
+<p>get_recipients: which should iterate over your recipients and yield with
+them. For example:</p>
+</li></ol>
+
+<p># def get_recipients #   recipient =
+Recipient.new(&#39;fzuppa@10pines.com&#39;, &#39;Federico&#39;,
+&#39;Zuppa&#39;) #   yield recipient # end</p>
+
+<p>After creating this class, you will usually execute it asynchronously using
+sidekiq:</p>
+
+<p><code>YourClass.perform_async</code></p>
+
+<p>To test it in the rails console, of course that you can do
+<strong>YourClass.new.perform</strong></p>
+
+<h2 id="label-A+few+important+use+cases">A few important use cases<span><a href="#label-A+few+important+use+cases">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>There is a demo project that shows the most important use cases I had
+inmind when building this plugin: <a
+href="https://github.com/10Pines/aws_ses_newsletters_demo">github.com/10Pines/aws_ses_newsletters_demo</a></p>
+
+<p>Here&#39;s a quick explanation of them:</p>
+
+<h3 id="label-Create+the+html+using+ERB">Create the html using ERB<span><a href="#label-Create+the+html+using+ERB">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>There is a helper class to do this called <a
+href="AwsSesNewsletters/HtmlBuilder.html">AwsSesNewsletters::HtmlBuilder</a>.
+It takes 2 parameters</p>
+<ol style="list-style-type: lower-alpha"><li>
+<p>The template erb that will be used to construct the html</p>
+</li><li>
+<p>A hash with variables needed to construct the html</p>
+</li></ol>
+
+<p>For example, take a look at NewslettersWithVariableReplacementsSender in
+the demo:</p>
+
+<pre>html_body: AwsSesNewsletters::HtmlBuilder.new(
+    &quot;#{::Rails.root}/app/views/newsletter_with_instance_variables.html.erb&quot;,
+    {promotions: [OpenStruct.new(name: &#39;10% off this week&#39;)]}
+).build</pre>
+
+<h3 id="label-Replace+strings+after+the+html+is+built">Replace strings after the html is built<span><a href="#label-Replace+strings+after+the+html+is+built">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>You need to do this to put the recipient&#39;s email for each mail or an
+unsubscription token (those were the 2 things I needed)</p>
+
+<p>If you want to perform such replacement, just override
+<code>do_custom_replacements_for(email, recipient)</code></p>
+
+<p>For example:</p>
+
+<pre class="ruby"><span class="ruby-keyword">def</span> <span class="ruby-identifier">do_custom_replacements_for</span>(<span class="ruby-identifier">mail</span>, <span class="ruby-identifier">recipient</span>)
+    <span class="ruby-identifier">mail</span>.<span class="ruby-identifier">html_part</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">mail</span>.<span class="ruby-identifier">html_part</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">raw_source</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&#39;recipient_email&#39;</span>, <span class="ruby-identifier">recipient</span>.<span class="ruby-identifier">email</span>)
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h3 id="label-Send+inline+attachments">Send inline attachments<span><a href="#label-Send+inline+attachments">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>This is discouraged. I found out after building the gem and that is why I
+left it (in case you need it)</p>
+
+<p>To do such thing, simply override <code>get_images</code> returning a hash
+of images.</p>
+
+<pre class="ruby"><span class="ruby-keyword">def</span> <span class="ruby-identifier">get_images</span>
+  <span class="ruby-identifier">images</span> = {}
+  <span class="ruby-identifier">images</span>[<span class="ruby-string">&quot;logo10pines&quot;</span>] = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;public/mailresources/logo-fullcolor_150px.png&#39;</span>))
+  <span class="ruby-identifier">images</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>In the html, simply put the id that you used in the hash.</p>
+
+<pre>&lt;img src=&quot;logo10pines&quot; %&gt;</pre>
+
+<p>Please look at the demo example that it will be much easier to understand!</p>
+
+<h4 id="label-Author-3A+Federico+Zuppa">Author: Federico Zuppa<span><a href="#label-Author-3A+Federico+Zuppa">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p><a href="mailto:fzuppa@10pines.com">fzuppa@10pines.com</a></p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

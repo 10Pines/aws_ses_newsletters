@@ -1,6 +1,7 @@
 require 'premailer'
 
 module AwsSesNewsletters
+  # Helper that allows you to build html from erb templates, inlines css as needed in emails
   class HtmlBuilder
     include Rails.application.routes.url_helpers
     include ActionView::Helpers

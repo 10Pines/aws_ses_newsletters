@@ -3,3 +3,116 @@
 This project rocks and uses MIT-LICENSE.
 
 {<img src="https://codeship.com/projects/1ddc9a90-e61d-0133-54a1-0e12c0a498c1/status?branch=master" alt="Status?branch=master" />}[https://codeship.com/projects/146708]
+
+== What is AwsSesNewsletters
+
+AwsSesNewsletters is a Rails plugin or, using the new nomenclature a gemified plugin, that allows you to
+very easily construct newsletters that are going to be sent with Amazon SES. In other words, it is a wrapper
+over aws-ses that provides some basic functionality to construct the emails and a common workflow to send
+the emails.
+
+== Dependencies
+
+1. https://github.com/drewblas/aws-ses
+2. https://github.com/premailer/premailer
+3. https://github.com/mperham/sidekiq
+
+== How to install
+
+=== Install the gem, either as
+<tt>gem install aws_ses_newsletters</tt>
+
+or adding
+
+<tt>gem 'aws_ses_newsletters'</tt> to your Gemfile and running <tt>bundle install</tt>
+
+=== Install the needed migrations, to generate the table for Newsletters & Emails Responses
+<tt>rake aws_ses_newsletters:install:migrations</tt>
+
+This will add 2 migration, that you need to run:
+
+<tt>rake db:migrate</tt>
+
+=== Mount the engine in the path of your preference. In <b>routes.rb</b>
+<tt>mount AwsSesNewsletters::Engine, at: "/newsletters"</tt>
+
+This will add 2 new routes to your application:
+a. POST newsletters/email_responses/bounce
+b. POST newsletters/email_responses/complaint
+
+These are the routes you need to configure in *SNS* to receive notifications for bounces and complaints respectively.
+
+=== Add your amazon keys
+a. SES_ACCESS_KEY_ID
+b. SES_SECRET_ACCESS_KEY
+
+In heroku, you need to set them as:
+
+heroku config:set SES_ACCESS_KEY_ID=<you_access_keid>
+heroku config:set SES_SECRET_ACCESS_KEY=<you_secret_access_key>
+
+== Usage
+
+To create a Newsletter, you need to inherit from AwsSesNewsletters::NewslettersSender and implement 2 methods:
+1. create_newsletter: which should create & return a AwsSesNewsletters::Newsletter
+2. get_recipients: which should iterate over your recipients and yield with them. For example:
+
+# def get_recipients
+#   recipient = Recipient.new('fzuppa@10pines.com', 'Federico', 'Zuppa')
+#   yield recipient
+# end
+
+After creating this class, you will usually execute it asynchronously using sidekiq:
+
+<tt>YourClass.perform_async</tt>
+
+To test it in the rails console, of course that you can do *YourClass.new.perform*
+
+== A few important use cases
+
+There is a demo project that shows the most important use cases I had inmind when building this plugin: https://github.com/10Pines/aws_ses_newsletters_demo
+
+Here's a quick explanation of them:
+
+=== Create the html using ERB
+
+There is a helper class to do this called AwsSesNewsletters::HtmlBuilder. It takes 2 parameters
+
+a. The template erb that will be used to construct the html
+b. A hash with variables needed to construct the html
+
+For example, take a look at NewslettersWithVariableReplacementsSender in the demo:
+
+    html_body: AwsSesNewsletters::HtmlBuilder.new(
+        "#{::Rails.root}/app/views/newsletter_with_instance_variables.html.erb",
+        {promotions: [OpenStruct.new(name: '10% off this week')]}
+    ).build
+
+=== Replace strings after the html is built
+You need to do this to put the recipient's email for each mail or an unsubscription token (those were the 2 things I needed)
+
+If you want to perform such replacement, just override <tt>do_custom_replacements_for(email, recipient)</tt>
+
+For example:
+    def do_custom_replacements_for(mail, recipient)
+        mail.html_part.body = mail.html_part.body.raw_source.gsub('recipient_email', recipient.email)
+    end
+
+=== Send inline attachments
+This is discouraged. I found out after building the gem and that is why I left it (in case you need it)
+
+To do such thing, simply override <tt>get_images</tt> returning a hash of images.
+  def get_images
+    images = {}
+    images["logo10pines"] = File.read(Rails.root.join('public/mailresources/logo-fullcolor_150px.png'))
+    images
+  end
+
+In the html, simply put the id that you used in the hash.
+
+    <img src="logo10pines" %>
+
+Please look at the demo example that it will be much easier to understand!
+
+==== Author: Federico Zuppa
+mailto:fzuppa@10pines.com
