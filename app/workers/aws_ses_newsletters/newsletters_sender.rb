@@ -30,9 +30,10 @@ module AwsSesNewsletters
     def send_emails
       mail = build_mail
       get_recipients do |recipient|
-        next if EmailResponse.exists?(email: recipient.email) # bounces & complaints
-        mail.to = recipient.email
-        replace_and_send_mail_safely(mail, recipient)
+        unless EmailResponse.exists?(email: recipient.email) # bounces & complaints
+          mail.to = recipient.email
+          replace_and_send_mail_safely(mail, recipient)
+        end
       end
     end
 
